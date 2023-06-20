@@ -1,0 +1,35 @@
+commit 0b13da6692d7632eded32497364db61984777ffb
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 14:19:08 2023 +0000
+
+    Code Refactoring
+
+commit a50db5d434ae48aa82c61035283ea8344ba319c4
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 14:15:18 2023 +0000
+
+    Update file README.md
+
+commit b36b1aeb4e99e5cb384792ea47487a4fbb19aac0
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 13:10:13 2023 +0000
+
+    OpenApi spezifikationen mit Swagger und Code Refactoring
+
+commit ea60817691acdf3028ddb2438d198183dfcde987
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 12:09:59 2023 +0000
+
+    Delete Methode hinzugefügt
+
+commit 94e3442c7076f8e88759145a75b3e171127b6bb8
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 11:46:15 2023 +0000
+
+    Grundaufgaben mit Auth
+
+commit 03753f725749cf4831de356ec07ce06969dd8881
+Author: Behan Kusi <behan.kusi@edu.tbz.ch>
+Date:   Tue Jun 20 11:04:25 2023 +0000
+
+    Initial commit
