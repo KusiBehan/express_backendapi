@@ -1,9 +1,256 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Task:
+ *       type: object
+ *       required:
+ *         - id
+ *         - titel
+ *         - Erstellungsdatum
+ *         - Erfüllungsdatum
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: Id der Task
+ *         titel:
+ *           type: string
+ *           description: Titel der Task
+ *         Erstellungsdatum:
+ *           type: string
+ *           format: date
+ *           description: Erstellungsdatum der Task
+ *         Erfüllungsdatum:
+ *           type: string
+ *           format: date
+ *           description: Wenn die Task erledigt wurde
+ *       example:
+ *         id: 12
+ *         titel: Dietike
+ *         Erstellungsdatum: 2020-03-10T04:05:06.157Z
+ *         Erfüllungsdatum: 2020-03-10T04:05:06.157Z 
+ *   requestBodies:
+ *    Taskbody:
+ *      description: Ein JSON Objekt mit TaskData
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Task'     
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: The Auth managing API
+ * /login:
+ *   post:
+ *     summary: Ein Login erstellen
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: email of the user
+ *       - in: query
+ *         name: password
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: password of the user
+ *     responses:
+ *       200:
+ *         description: user succesfully authenticated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: strng
+ *             required: true
+ *             
+ *       401:
+ *         description: unauthorized
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: The Auth managing API
+ * /verify:
+ *   get:
+ *     summary: get the status of the cookie
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: authentifiziert.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: strng
+ *             required: true
+ *             
+ *       401:
+ *         description: nicht authentifiziert.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: The Auth managing API
+ * /logout:
+ *   delete:
+ *     summary: aktuelle Session beenden
+ *     tags: [Auth]
+ *     responses:
+ *       204:
+ *         description: erledigt aktuelle Session wurde gelöscht.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Tasks
+ *   description: The Tasks managing API
+ * /tasks:
+ *   post:
+ *     summary: create a Task
+ *     tags: [Tasks]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       200:
+ *         description: The created Task.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *       422:
+ *         description: The body object to post is null
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Tasks
+ *   description: The Tasks managing API
+ * /tasks:
+ *   get:
+ *     summary: get all tasks
+ *     tags: [Tasks]
+ *     responses:
+ *       200:
+ *         description: The created Task.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *       403:
+ *         description: No authorization
+ */
+
+/**
+ * @swagger
+ * /Tasks/{id}:
+ *   get:
+ *     summary: get a Task by id
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The Task id
+ *     responses:
+ *       200:
+ *         description: The created Task.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /Tasks/{id}:
+ *   put:
+ *     summary: Task verändern
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The Task id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       200:
+ *         description: The changed Book.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *       422:
+ *         description: Id leer
+ *       403:
+ *         description: no authorization
+ */
+
+/**
+ * @swagger
+ * /Tasks/{id}:
+ *   delete:
+ *     summary: Task verändern
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The Task id to delete
+ *     responses:
+ *       200:
+ *         description: Erfolgreich gelöscht.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *       422:
+ *         description: Id leer
+ *       403:
+ *         description: no authorization
+ */
+
+
+
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-//  const server = require("./server.js");
-// const multer = require("multer");
-// const bodyparser = require("body-parser")
-// const upload = multer();
+ const server = require("./server.js");
 const session = require("express-session");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -16,8 +263,8 @@ app.use(session({ secret: "Behan Secret" }));
 
 app.use(bodyParser.json())
 
-// const specs = swaggerJsDoc(server);
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+const specs = swaggerJsDoc(server);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 let Tasks = [
     {
@@ -113,7 +360,7 @@ app.put("/tasks/:ID", (req, res) => {
         if (IsNotNullChecker(taskobject) == true) {
             let index = Tasks.indexOf(FindById(Tasks, id));
             Tasks[index] = { ...Tasks[index], ...taskobject };
-            res.status(200).json(taskobject);
+            res.status(204).json(taskobject);
         } else {
             res.status(422).send("Property leer");
         }
@@ -126,9 +373,10 @@ app.put("/tasks/:ID", (req, res) => {
 app.delete("/tasks/:ID", (req, res) => {
     if (req.session.authenticated == true) {
         const id = req.params.ID;
-        let index = Tasks.indexOf(FindById(Tasks, id));
+        let TasktoDelete = FindById(Tasks,id);
+        let index = Tasks.indexOf(TasktoDelete);
         Tasks.splice(index, 1);
-        res.status(200).send("Erfolgreich");
+        res.status(202).send(TasktoDelete);
     } else {
         res.status(403).send("no auth");
     }
