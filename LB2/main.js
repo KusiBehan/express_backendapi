@@ -296,7 +296,7 @@ app.post("/login", (req, res) => {
     loginpwd = req.query.password;
     if (loginpwd == mypwd) {
         req.session.authenticated = true;
-        res.status(200).send("user authenticated")
+        res.status(200).json("user authenticated")
     } else {
         res.sendStatus(401);
     }
@@ -304,22 +304,22 @@ app.post("/login", (req, res) => {
 
 app.get("/verify", (req, res) => {
     if (req.session.authenticated == true) {
-        res.status(200).send("authentifiziert");
+        res.status(200).json("authentifiziert");
     } else {
-        res.status(401).send("nicht authentifiziert");
+        res.status(401).json("nicht authentifiziert");
     }
 });
 
 app.delete("/logout", (req, res) => {
     req.session.authenticated = false;
-    res.status(204).send("done");
+    res.status(204).json("done");
 });
 
 app.get("/tasks", (req, res) => {
     if (req.session.authenticated == true) {
-        res.status(200).send(Tasks);
+        res.status(200).json(Tasks);
     } else {
-        res.status(403).send("no auth");
+        res.status(403).json("no auth");
     }
 });
 
@@ -330,11 +330,11 @@ app.post("/tasks", (req, res) => {
             Tasks.push(Newtask);
             res.status(201).json(Newtask);
         } else {
-            res.status(422).send("Leeres Objekt");
+            res.status(422).json("Leeres Objekt");
         }
     }
     else {
-        res.status(403).send("no auth");
+        res.status(403).json("no auth");
     }
 });
 
@@ -346,10 +346,10 @@ app.get("/tasks/:ID", (req, res) => {
         if (!(typeof taskobject === "undefined")) {
             res.status(200).json(taskobject);
         } else {
-            res.status(404).send("nicht gefunden");
+            res.status(404).json("nicht gefunden");
         }
     } else {
-        res.status(403).send("no auth");
+        res.status(403).json("no auth");
     }
 });
 
@@ -360,13 +360,13 @@ app.put("/tasks/:ID", (req, res) => {
         if (IsNotNullChecker(taskobject) == true) {
             let index = Tasks.indexOf(FindById(Tasks, id));
             Tasks[index] = { ...Tasks[index], ...taskobject };
-            res.status(204).json(taskobject);
+            res.status(200).json(taskobject);
         } else {
-            res.status(422).send("Property leer");
+            res.status(422).json("Property leer");
         }
     }
     else {
-        res.status(403).send("no auth");
+        res.status(403).json("no auth");
     }
 });
 
@@ -376,9 +376,9 @@ app.delete("/tasks/:ID", (req, res) => {
         let TasktoDelete = FindById(Tasks,id);
         let index = Tasks.indexOf(TasktoDelete);
         Tasks.splice(index, 1);
-        res.status(202).send(TasktoDelete);
+        res.status(202).json(TasktoDelete);
     } else {
-        res.status(403).send("no auth");
+        res.status(403).json("no auth");
     }
 }
 );
