@@ -294,7 +294,7 @@ mypwd = "m295";
 app.post("/login", (req, res) => {
     loginmail = req.query.email;
     loginpwd = req.query.password;
-    if (loginpwd == mypwd) {
+    if (loginpwd == mypwd && loginmail != "") {
         req.session.authenticated = true;
         res.status(200).json("user authenticated")
     } else {
@@ -397,6 +397,6 @@ function IsNotNullChecker(report) {
 }
 
 app.listen(8080, () => {
-    console.log("Server is running on port weerew");
+    console.log("Server is running on port 8080");
 });
 
