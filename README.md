@@ -4,6 +4,15 @@
 Wenn sie mein main.js file ausführen denn können Sie über http://localhost:8080/api-docs/ auf dem Swagger zugreifen
 
 ### Hinweise
+Dependencies installieren mit npm:
+npm install "swagger-jsdoc"
+npm install"swagger-ui-express"
+npm install"./server.js"
+npm install"express-session"
+npm install"express"
+npm install"body-parser"
+
+
 function IsNotNullChecker(report) {
     return !Object.values(report).every((o) => o === "");
 }
